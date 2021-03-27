@@ -8,7 +8,6 @@ import { connect } from "mongoose";
 // import { executor } from "./executor";
 import * as typegraphql from "type-graphql";
 import { DB_URL } from "./config";
-import { UserResolver } from "./resolvers/User";
 
 const app = express();
 
@@ -16,9 +15,8 @@ const start = async () => {
 	await connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 
 	const schema = await typegraphql.buildSchema({
-		resolvers: [UserResolver],
+		resolvers: [__dirname + "\\resolvers\\*.ts"],
 	});
-
 	const server = new ApolloServer({
 		schema,
 		// executor: executor(schema),
@@ -27,8 +25,12 @@ const start = async () => {
 
 	server.applyMiddleware({ app });
 	app.listen(4001);
-
-	console.log("Server started");
 };
 
-void start();
+console.log(__dirname);
+
+start().then(() => {
+	console.log("Server started");
+}).catch(err => {
+	console.error(err);
+});
