@@ -8,7 +8,7 @@ export class User {
 	readonly _id!: ObjectId;
 
 	@Field()
-	@Property({ required: true })
+	@Property({ required: true, unique: true })
 	email!: string;
 
 	@Field({ nullable: true })

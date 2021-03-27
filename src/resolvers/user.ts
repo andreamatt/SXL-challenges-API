@@ -1,21 +1,9 @@
-import { IsEmail, Length } from "class-validator";
-import { Arg, Field, InputType, Mutation, Query, Resolver } from "type-graphql";
-import { User, UserModel } from "../entities/user";
+import { Arg, Mutation, Query, Resolver } from "type-graphql";
 import { hash } from "bcrypt";
-
-@InputType()
-class UserRegisterInput {
-	@Field()
-	@IsEmail()
-	email!: string;
-
-	@Field()
-	@Length(1, 30)
-	nickname!: string;
-
-	@Field()
-	password!: string;
-}
+import { UserAlreadyRegistered } from "../entities/Error";
+import { User, UserModel } from "../entities/User";
+import { UserRegisterResult } from "./user/UserResult";
+import { UserRegisterInput } from "./user/UserInput";
 
 @Resolver(User)
 export class UserResolver {
@@ -24,10 +12,14 @@ export class UserResolver {
 		return await UserModel.find();
 	}
 
-	@Mutation(() => User)
+	@Mutation(() => UserRegisterResult)
 	async UserRegister(
 		@Arg("data") { email, nickname, password }: UserRegisterInput
-	): Promise<User> {
+	): Promise<User | UserAlreadyRegistered> {
+		const user = await UserModel.findOne({ email });
+		if (user) {
+			return new UserAlreadyRegistered();
+		}
 		return await UserModel.create({
 			email,
 			nickname,

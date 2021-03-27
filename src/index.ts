@@ -8,12 +8,12 @@ import { connect } from "mongoose";
 // import { executor } from "./executor";
 import * as typegraphql from "type-graphql";
 import { DB_URL } from "./config";
-import { UserResolver } from "./resolvers/user";
+import { UserResolver } from "./resolvers/User";
 
 const app = express();
 
 const start = async () => {
-	await connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+	await connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 
 	const schema = await typegraphql.buildSchema({
 		resolvers: [UserResolver],
