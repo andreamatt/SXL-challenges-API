@@ -3,6 +3,7 @@ import { User, UserModel } from "../entities/User";
 import { UserRegisterResult } from "./user/UserResult";
 import { UserRegisterInput } from "./user/UserInput";
 import { GenericError } from "../entities/Error";
+import { hash } from "bcrypt";
 
 @Resolver(User)
 export class UserResolver {
@@ -14,16 +15,17 @@ export class UserResolver {
 	@Mutation(() => UserRegisterResult)
 	async UserRegister(
 		@Arg("data") { email, nickname, password }: UserRegisterInput
-	): Promise<typeof UserRegisterResult> {
+	): Promise<UserRegisterResult> {
 		const user = await UserModel.findOne({ email });
 		if (user) {
-			return new GenericError();
+			const error = new GenericError("User already registered");
+			return new UserRegisterResult(undefined, error);
 		}
-		return new GenericError();
-		// return await UserModel.create({
-		// 	email,
-		// 	nickname,
-		// 	password: await hash(password, 12),
-		// });
+
+		return new UserRegisterResult(await UserModel.create({
+			email,
+			nickname,
+			password: await hash(password, 12),
+		}));
 	}
 }
