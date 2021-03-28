@@ -13,7 +13,11 @@ import { UserResolver } from "./resolvers/User";
 
 const app = express();
 
-export let schema: GraphQLSchema;
+let schema: GraphQLSchema;
+
+export const getSchema = (): GraphQLSchema => {
+	return schema;
+};
 
 export const createSchema = async (): Promise<void> => {
 	schema = await typegraphql.buildSchema({

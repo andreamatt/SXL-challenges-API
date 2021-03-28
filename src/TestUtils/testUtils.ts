@@ -1,6 +1,6 @@
 import { ExecutionResult, graphql } from "graphql";
 import { Maybe } from "type-graphql";
-import { schema } from "../server";
+import { getSchema } from "../server";
 
 interface Options {
 	source: string;
@@ -11,6 +11,7 @@ interface Options {
 }
 
 export const gCall = async ({ source, variableValues }: Options): Promise<ExecutionResult> => {
+	const schema = getSchema();
 	if (!schema) {
 		console.log("NO SCHEMA");
 	}
