@@ -13,9 +13,13 @@ import { UserResolver } from "./resolvers/User";
 
 const app = express();
 
-export const createSchema = async (): Promise<GraphQLSchema> => typegraphql.buildSchema({
-	resolvers: [UserResolver],
-});
+export let schema: GraphQLSchema;
+
+export const createSchema = async (): Promise<void> => {
+	schema = await typegraphql.buildSchema({
+		resolvers: [UserResolver],
+	});
+};
 
 export const connectDB = async (url: string): Promise<void> => {
 	await connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
@@ -23,7 +27,7 @@ export const connectDB = async (url: string): Promise<void> => {
 
 export let server: Server;
 export const startServer = async (): Promise<void> => {
-	const schema = await createSchema();
+	await createSchema();
 	const apolloServer = new ApolloServer({
 		schema,
 		// executor: executor(schema),

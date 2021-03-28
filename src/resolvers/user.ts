@@ -1,9 +1,8 @@
 import { Arg, Mutation, Query, Resolver } from "type-graphql";
-import { hash } from "bcrypt";
-import { UserAlreadyRegistered } from "../entities/Error";
 import { User, UserModel } from "../entities/User";
 import { UserRegisterResult } from "./user/UserResult";
 import { UserRegisterInput } from "./user/UserInput";
+import { GenericError } from "../entities/Error";
 
 @Resolver(User)
 export class UserResolver {
@@ -15,15 +14,16 @@ export class UserResolver {
 	@Mutation(() => UserRegisterResult)
 	async UserRegister(
 		@Arg("data") { email, nickname, password }: UserRegisterInput
-	): Promise<User | UserAlreadyRegistered> {
+	): Promise<typeof UserRegisterResult> {
 		const user = await UserModel.findOne({ email });
 		if (user) {
-			return new UserAlreadyRegistered();
+			return new GenericError();
 		}
-		return await UserModel.create({
-			email,
-			nickname,
-			password: await hash(password, 12),
-		});
+		return new GenericError();
+		// return await UserModel.create({
+		// 	email,
+		// 	nickname,
+		// 	password: await hash(password, 12),
+		// });
 	}
 }

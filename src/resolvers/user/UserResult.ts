@@ -1,9 +1,5 @@
-import { createUnionType } from "type-graphql";
-import { UserAlreadyRegistered } from "../../entities/Error";
 import { User } from "../../entities/User";
+import { createResultType } from "../../Utils/typeGenerator";
 
 
-export const UserRegisterResult = createUnionType({
-	name: "UserRegisterResult",
-	types: () => [User, UserAlreadyRegistered]
-});
+export const UserRegisterResult = createResultType(User);

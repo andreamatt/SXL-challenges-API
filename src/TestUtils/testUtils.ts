@@ -1,8 +1,6 @@
-import { mongoose } from "@typegoose/typegoose";
-import { buildSchema, ExecutionResult, graphql, GraphQLSchema } from "graphql";
+import { ExecutionResult, graphql } from "graphql";
 import { Maybe } from "type-graphql";
-import { DB_TEST_URL } from "../config";
-import { connectDB, createSchema } from "../server";
+import { schema } from "../server";
 
 interface Options {
 	source: string;
@@ -12,20 +10,15 @@ interface Options {
 	userId?: number;
 }
 
-let schema: GraphQLSchema;
-
 export const gCall = async ({ source, variableValues }: Options): Promise<ExecutionResult> => {
 	if (!schema) {
-		schema = await createSchema();
+		console.log("NO SCHEMA");
 	}
-	console.log("Schema:\n" + schema);
-	const result = await graphql({
+	return await graphql({
 		schema,
 		source,
 		variableValues
 	});
-	console.log("Result inside:" + result);
-	return result;
 };
 
 
