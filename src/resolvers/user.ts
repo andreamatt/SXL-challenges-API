@@ -20,6 +20,7 @@ export class UserResolver {
 			return new UserAlreadyRegistered();
 		}
 
+
 		return await UserModel.create({
 			email,
 			nickname,
