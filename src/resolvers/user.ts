@@ -19,7 +19,7 @@ export class UserResolver {
 		if (user) {
 			return new UserAlreadyRegistered();
 		}
-		// return new UserAlreadyRegistered();
+
 		return await UserModel.create({
 			email,
 			nickname,

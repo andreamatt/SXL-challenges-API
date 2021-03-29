@@ -18,12 +18,13 @@ const users = `
 {
 	users{
 		email
+		nickname
 	}
 }
 `;
 
 describe("testing user", () => {
-	const data = {
+	const user = {
 		email: faker.internet.email(),
 		nickname: faker.internet.userName(),
 		password: faker.internet.password()
@@ -33,40 +34,51 @@ describe("testing user", () => {
 		const result = await gCall({
 			source: userRegister,
 			variableValues: {
-				data
+				data: user
 			}
 		});
 
-		const returnData = {
-			__typename: "User",
-		};
-		console.dir(result);
-		// _.omit(data, "password");
-		// expect(result).toMatchObject(returnData);
-		expect(data).toMatchObject(data);
+		expect(result).toMatchObject({
+			data: {
+				UserRegister: {
+					__typename: "User",
+					..._.omit(user, "password")
+				}
+			}
+		});
 	});
 
 	it("user register error", async () => {
 		const result = await gCall({
 			source: userRegister,
 			variableValues: {
-				data
+				data: user
 			}
 		});
 
-		const returnData = {
-			__typename: "User",
-		};
-		console.dir(result);
-		// _.omit(data, "password");
-		// expect(result).toMatchObject(returnData);
-		expect(data).toMatchObject(data);
+		expect(result).toMatchObject({
+			data: {
+				UserRegister: {
+					__typename: "UserAlreadyRegistered"
+				}
+			}
+		});
 	});
 
 	it("user list", async () => {
 		// const result = await gCall({ source: users });
 		const result = await gCall({
 			source: users
+		});
+
+		expect(result).toMatchObject({
+			data: {
+				users: [
+					{
+						..._.omit(user, "password")
+					}
+				]
+			}
 		});
 	});
 });
