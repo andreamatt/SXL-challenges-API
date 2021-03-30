@@ -15,19 +15,15 @@ export class UserResolver {
 	async UserRegister(
 		@Arg("data") { email, nickname, password }: UserRegisterInput
 	): Promise<typeof UserRegisterResult> {
-		let user = await UserModel.findOne({ email });
+		const user = await UserModel.findOne({ email });
 		if (user) {
 			return new UserAlreadyRegistered();
 		}
 
-
-		user = await UserModel.create({
+		return await UserModel.create({
 			email,
 			nickname,
 			password: await hash(password, 12),
 		});
-		console.dir(user);
-
-		return user;
 	}
 }

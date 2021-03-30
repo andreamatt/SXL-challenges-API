@@ -16,5 +16,3 @@ export function createUnion<T extends ClassType<UnionElement>[]>(types: T): Unio
 interface UnionElement {
 	mytypename: string
 }
-
-
