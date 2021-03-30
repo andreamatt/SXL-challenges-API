@@ -17,6 +17,12 @@ export class User {
 
 	@Property({ required: true })
 	password!: string;
+
+	public get mytypename(): string {
+		return User.name;
+	}
 }
 
 export const UserModel = getModelForClass(User);
+
+console.dir(UserModel.schema.paths);
