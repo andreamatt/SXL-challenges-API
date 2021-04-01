@@ -25,9 +25,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: yarn install
-    - run: yarn test
-    - env:
+    - name: Yarn install
+      run: yarn install
+    - name: Yarn test
+      run: yarn test
+      env:
       - NODE_ENV: test
       - HTTP_PORT: 8080
       - HTTPS_PORT: 8443
