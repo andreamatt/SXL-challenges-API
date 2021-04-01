@@ -10,8 +10,8 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-
+  test:
+    environment: test
     runs-on: ubuntu-latest
 
     strategy:
@@ -20,6 +20,10 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}  
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
