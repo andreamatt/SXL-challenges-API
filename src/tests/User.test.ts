@@ -1,6 +1,6 @@
 import faker from "faker";
 import _ from "lodash";
-import { gCall } from "../TestUtils/testUtils";
+import { gCall, gqlTest } from "../TestUtils/testUtils";
 
 const userRegister = `
 mutation Register($data: UserRegisterInput!){ 
@@ -30,7 +30,7 @@ describe("testing user", () => {
 		password: faker.internet.password()
 	};
 
-	it("user register", async () => {
+	gqlTest("user register", async () => {
 		const result = await gCall({
 			source: userRegister,
 			variableValues: {
@@ -48,7 +48,7 @@ describe("testing user", () => {
 		});
 	});
 
-	it("user register error", async () => {
+	gqlTest("user register error", async () => {
 		const result = await gCall({
 			source: userRegister,
 			variableValues: {
@@ -65,7 +65,7 @@ describe("testing user", () => {
 		});
 	});
 
-	it("user list", async () => {
+	gqlTest("user list", async () => {
 		// const result = await gCall({ source: users });
 		const result = await gCall({
 			source: users
