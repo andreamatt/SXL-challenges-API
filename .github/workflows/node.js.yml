@@ -142,7 +142,7 @@ jobs:
         run: yarn build
 
       - name: DockerHub login
-        uses: actions/login-action@v1
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -152,5 +152,4 @@ jobs:
         with:
           context: .
           push: true
-          repository: andreamatt/sxl_challenges
-          tag_with_ref: true
+          tag: andreamatt/sxl_challenges:latest
