@@ -114,3 +114,37 @@ jobs:
           NODE_ENV: test
           HTTP_PORT: 8080
           HTTPS_PORT: 8443
+
+  dockerize:
+    needs: [test_js]
+    environment: test
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install packages
+        run: yarn install
+
+      - name: Compile typescript
+        run: yarn build
+
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: andreamatt/sxl_challenges
+          tag_with_ref: true
