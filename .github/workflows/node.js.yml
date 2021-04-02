@@ -69,7 +69,7 @@ jobs:
         run: yarn install
 
       - name: Compile typescript
-        run: yarn tsc
+        run: yarn build
 
 
   test_js:
@@ -92,7 +92,7 @@ jobs:
         run: yarn install
 
       - name: Compile typescript
-        run: yarn tsc
+        run: yarn build
 
       - name: Test javascript
         run: yarn test-js

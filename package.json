@@ -43,6 +43,6 @@
 		"test": "jest -c=jest.json",
 		"test-js": "jest -c=jest-js.json",
 		"lint": "eslint src",
-		"build": "ts-node src/build.ts"
+		"build": "tsc"
 	}
 }
