@@ -142,7 +142,7 @@ jobs:
         run: yarn build
 
       - name: DockerHub login
-        uses: actions/login-action@v2
+        uses: actions/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
