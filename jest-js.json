@@ -1,0 +1,15 @@
+{
+	"roots": [
+		"<rootDir>/build"
+	],
+	"testMatch": [
+		"**/?(*.)+(spec|test).+(js)"
+	],
+	"transform": {
+		"^.+\\.(ts|tsx)$": "ts-jest"
+	},
+	"testEnvironment": "node",
+	"setupFilesAfterEnv": [
+		"./build/TestUtils/setupFile.js"
+	]
+}

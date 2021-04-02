@@ -1,0 +1,15 @@
+{
+	"roots": [
+		"<rootDir>/src"
+	],
+	"testMatch": [
+		"**/?(*.)+(spec|test).+(ts|tsx|js)"
+	],
+	"transform": {
+		"^.+\\.(ts|tsx)$": "ts-jest"
+	},
+	"testEnvironment": "node",
+	"setupFilesAfterEnv": [
+		"./src/TestUtils/setupFile.ts"
+	]
+}

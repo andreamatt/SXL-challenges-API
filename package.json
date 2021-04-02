@@ -40,22 +40,8 @@
 	},
 	"scripts": {
 		"start": "ts-node-dev --cls --watch '.' --respawn src/index.ts",
-		"test": "jest",
+		"test": "jest -c=jest.json",
+		"test-js": "jest -c=jest-js.json",
 		"build": "ts-node src/build.ts"
-	},
-	"jest": {
-		"roots": [
-			"<rootDir>/src"
-		],
-		"testMatch": [
-			"**/?(*.)+(spec|test).+(ts|tsx|js)"
-		],
-		"transform": {
-			"^.+\\.(ts|tsx)$": "ts-jest"
-		},
-		"testEnvironment": "node",
-		"setupFilesAfterEnv": [
-			"./src/TestUtils/setupFile.ts"
-		]
 	}
 }
