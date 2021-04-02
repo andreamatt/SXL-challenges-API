@@ -42,6 +42,7 @@
 		"start": "ts-node-dev --cls --watch '.' --respawn src/index.ts",
 		"test": "jest -c=jest.json",
 		"test-js": "jest -c=jest-js.json",
+		"lint": "eslint src",
 		"build": "ts-node src/build.ts"
 	}
 }

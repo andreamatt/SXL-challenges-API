@@ -20,7 +20,7 @@ jobs:
         run: yarn install
 
       - name: Run Typescript Checks
-        run: yarn eslint src
+        run: yarn lint
 
 
   test_ts:
