@@ -57,7 +57,7 @@ jobs:
 
 
   build:
-    needs: lint
+    needs: [lint, test_ts]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -82,7 +82,7 @@ jobs:
 
 
   test_js:
-    needs: [lint, build, test]
+    needs: build
     environment: test
     runs-on: ubuntu-latest
     strategy:
