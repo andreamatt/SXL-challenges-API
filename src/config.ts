@@ -9,8 +9,6 @@ const getSecret = (name: string): string | undefined => {
 	} catch (err) {
 		if (err.code !== "ENOENT") {
 			console.error(`An error occurred while trying to read the secret: ${name}. Err: ${err}`);
-		} else {
-			console.debug(`Could not find the secret, probably not running in swarm mode: ${name}. Err: ${err}`);
 		}
 		return undefined;
 	}
@@ -21,7 +19,20 @@ const getEnv = (name: string): string | undefined => {
 };
 
 const getConfig = (name: string): string => {
-	return getSecret(name) ?? getEnv(name) as string;
+	let value = getSecret(name);
+	if (value) {
+		console.log(`Config ${name} retrieved from secrets`);
+		return value;
+	}
+
+	value = getEnv(name);
+	if (value) {
+		console.log(`Config ${name} retrieved from env`);
+		return value;
+	}
+
+	console.log(`Config ${name} not found`);
+	return undefined as unknown as string;
 };
 
 export const DB_URL = getConfig("DB_URL");

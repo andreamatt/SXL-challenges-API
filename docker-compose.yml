@@ -5,7 +5,6 @@ services:
       context: .
     secrets:
       - DB_URL
-      - NODE_ENV
 
 secrets:
   DB_URL:
