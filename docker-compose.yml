@@ -1,8 +1,16 @@
-version: "2"
+version: "3.8"
 services:
   web:
     build:
       context: .
       args:
         DB_URL: ${DB_URL}
+      secrets:
+        - DB_URL
+        - NODE_ENV
 
+secrets:
+  DB_URL:
+    external: true
+  NODE_ENV:
+    external: true

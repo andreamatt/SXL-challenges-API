@@ -10,6 +10,7 @@ import * as typegraphql from "type-graphql";
 import { Server } from "node:http";
 import { GraphQLSchema } from "graphql";
 import { UserResolver } from "./resolvers/User";
+import { HTTP_PORT } from "./config";
 
 const app = express();
 
@@ -39,5 +40,6 @@ export const startServer = async (): Promise<void> => {
 	});
 
 	apolloServer.applyMiddleware({ app });
-	server = app.listen(4001);
+	server = app.listen(8080);
+	console.log("Server listening on port " + 8080);
 };
