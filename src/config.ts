@@ -20,8 +20,8 @@ const getEnv = (name: string): string | undefined => {
 	return process.env[name];
 };
 
-const getConfig = (name: string): string | undefined => {
-	return getSecret(name) ?? getEnv(name);
+const getConfig = (name: string): string => {
+	return getSecret(name) ?? getEnv(name) as string;
 };
 
 export const DB_URL = getConfig("DB_URL");
