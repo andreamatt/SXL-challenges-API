@@ -37,9 +37,10 @@ export const startServer = async (): Promise<void> => {
 		schema,
 		// executor: executor(schema),
 		playground: true,
+
 	});
 
-	apolloServer.applyMiddleware({ app });
-	server = app.listen(8080);
-	console.log("Server listening on port " + 8080);
+	apolloServer.applyMiddleware({ app, path: "/api/graphql" });
+	server = app.listen(HTTP_PORT);
+	console.log("Server listening on port " + HTTP_PORT);
 };

@@ -1,33 +1,36 @@
 import * as dotenv from "dotenv";
 import * as fs from "fs";
 
-dotenv.config();
+const secretEnvPath = "/run/secrets/ENV";
+if (fs.existsSync(secretEnvPath)) {
+	console.log("Parsing ENV from secrets");
+	dotenv.config({
+		path: secretEnvPath
+	});
+}
+else {
+	console.log("Parsing ENV from environment");
+	dotenv.config();
+}
 
-const getSecret = (name: string): string | undefined => {
-	try {
-		return fs.readFileSync(`/run/secrets/${name}`, "utf8");
-	} catch (err) {
-		if (err.code !== "ENOENT") {
-			console.error(`An error occurred while trying to read the secret: ${name}. Err: ${err}`);
-		}
-		return undefined;
-	}
-};
+// const getSecret = (name: string): string | undefined => {
+// 	try {
+// 		return fs.readFileSync(`/run/secrets/${name}`, "utf8");
+// 	} catch (err) {
+// 		if (err.code !== "ENOENT") {
+// 			console.error(`An error occurred while trying to read the secret: ${name}. Err: ${err}`);
+// 		}
+// 		return undefined;
+// 	}
+// };
 
 const getEnv = (name: string): string | undefined => {
 	return process.env[name];
 };
 
 const getConfig = (name: string): string => {
-	let value = getSecret(name);
+	const value = getEnv(name);
 	if (value) {
-		console.log(`Config ${name} retrieved from secrets`);
-		return value;
-	}
-
-	value = getEnv(name);
-	if (value) {
-		console.log(`Config ${name} retrieved from env`);
 		return value;
 	}
 

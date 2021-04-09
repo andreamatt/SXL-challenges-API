@@ -2,8 +2,6 @@ FROM node:14
 
 RUN mkdir -p /home/app
 
-EXPOSE 8080
-
 COPY ./package.json /home/app/package.json
 COPY ./yarn.lock /home/app/yarn.lock
 RUN cd /home/app && yarn install
