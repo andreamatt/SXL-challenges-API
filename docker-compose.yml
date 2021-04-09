@@ -3,7 +3,7 @@ services:
   web:
     build:
       context: .
-    image: andreamatt/sxl_challenges
+    image: andreamatt/sxl_challenges:latest
     secrets:
       - ENV
     networks:
@@ -23,6 +23,12 @@ services:
     # - NGINX_HOST=foobar.com
     # - NGINX_PORT=80
     command: /bin/bash -c "envsubst < /etc/nginx/conf.d/nginx.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30
 
 secrets:
   ENV:
