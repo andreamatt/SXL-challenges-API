@@ -8,6 +8,6 @@ RUN cd /home/app && yarn install
 
 COPY tsconfig.json /home/app/tsconfig.json
 COPY src /home/app/src
-RUN cd /home/app && yarn build
+RUN cd /home/app && yarn build && yarn install --production=true
 
 CMD ["node", "/home/app/build/index.js"]

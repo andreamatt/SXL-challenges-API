@@ -8,6 +8,7 @@ on:
 
 jobs:
   lint:
+    name: Lint typescript
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -28,6 +29,7 @@ jobs:
 
 
   test_ts:
+    name: Test typescript
     environment: test
     runs-on: ubuntu-latest
     strategy:
@@ -58,7 +60,7 @@ jobs:
 
 
   build:
-    needs: [lint, test_ts]
+    name: Build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -83,6 +85,7 @@ jobs:
 
 
   test_js:
+    name: Test javascript
     needs: build
     environment: test
     runs-on: ubuntu-latest
@@ -116,7 +119,8 @@ jobs:
           HTTPS_PORT: 8443
 
   dockerize:
-    needs: [test_js]
+    name: Build and push docker image
+    needs: [lint, test_ts, test_js]
     environment: production
     runs-on: ubuntu-latest
 
