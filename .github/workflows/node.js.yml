@@ -139,6 +139,3 @@ jobs:
           context: .
           push: true
           tags: andreamatt/sxl_challenges:latest
-          secrets: |
-            "DB_URL=${{ secrets.DB_URL }}"
-            "NODE_ENV=production"

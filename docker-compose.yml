@@ -3,6 +3,7 @@ services:
   web:
     build:
       context: .
+    image: andreamatt/sxl_challenges
     secrets:
       - ENV
     networks:
